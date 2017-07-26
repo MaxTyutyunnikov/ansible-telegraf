@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [ansible-telegraf](#ansible-telegraf)
+  - [Requirements](#requirements)
+  - [Role Variables](#role-variables)
+  - [Dependencies](#dependencies)
+  - [Example Playbook](#example-playbook)
+  - [License](#license)
+  - [Author Information](#author-information)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # ansible-telegraf
 
 An [Ansible](https://www.ansible.com) role to install/configure [Telegraf](https://www.influxdata.com/time-series-platform/telegraf)
@@ -12,7 +26,9 @@ None
 ---
 # defaults file for ansible-telegraf
 config_telegraf: true
+
 enable_telegraf_global_tags: false
+
 telegraf_agent_info:
   ## Collection jitter is used to jitter the collection by a random amount
   collection_jitter: 10s
@@ -40,6 +56,7 @@ telegraf_agent_info:
   quiet: false
   ## Rounds collection interval to 'interval'
   round_interval: true
+
 telegraf_basic_inputs:
   - 'diskio'
   - 'kernel'
@@ -49,11 +66,15 @@ telegraf_basic_inputs:
   - 'processes'
   - 'swap'
   - 'system'
-telegraf_debian_file: 'telegraf_{{ telegraf_version }}_amd64.deb'
+
+telegraf_debian_file: 'telegraf_{{ telegraf_version }}-1_amd64.deb'
+
 telegraf_dl_uri: 'https://dl.influxdata.com/telegraf/releases'
+
 telegraf_global_tags:
   - key: 'dc'
     value: 'us-east-1'
+
 telegraf_inputs:
   cpu:
     enabled: true
@@ -161,6 +182,7 @@ telegraf_inputs:
       - ':2181'
       # - 10.0.0.1:2181
       # - 'localhost:2181'
+
 telegraf_outputs:
   graphite:
     enabled: false
@@ -196,7 +218,9 @@ telegraf_outputs:
     enabled: false
     ## Address to listen on
     listen: ':9126'
+
 telegraf_redhat_file: 'telegraf-{{ telegraf_version }}.x86_64.rpm'
+
 telegraf_version: 1.3.4
 ```
 
