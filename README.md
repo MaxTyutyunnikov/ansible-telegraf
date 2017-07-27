@@ -25,7 +25,7 @@ None
 ```yaml
 ---
 # defaults file for ansible-telegraf
-config_telegraf: true
+telagraf_config: true
 
 enable_telegraf_global_tags: false
 
