@@ -76,11 +76,27 @@
   percpu = {{ telegraf_inputs.cpu.percpu|lower }}
   totalcpu = {{ telegraf_inputs.cpu.totalcpu|lower }}
   fielddrop = ["{{ telegraf_inputs.cpu.fielddrop }}"]
+{%   if telegraf_inputs['cpu']['tags'] is defined %}
+  [inputs.cpu.tags]
+{%     for item in telegraf_inputs['cpu']['tags'] %}
+{% set _key = item.split(': ')[0] %}
+{% set _val = telegraf_inputs['cpu']['tags'][_key] %}
+    {{ _key }} = "{{ _val }}"
+{%     endfor %}
+{%   endif %}
 {% endif %}
 {% if telegraf_inputs.disk.enabled %}
 [[inputs.disk]]
   mount_points = ["{{ telegraf_inputs.disk.mount_points|join ('", "')}}"]
   ignore_fs = ["{{ telegraf_inputs.disk.ignore_fs|join ('", "')}}"]
+{%   if telegraf_inputs['disk']['tags'] is defined %}
+  [inputs.disk.tags]
+{%     for item in telegraf_inputs['disk']['tags'] %}
+{% set _key = item.split(': ')[0] %}
+{% set _val = telegraf_inputs['disk']['tags'][_key] %}
+    {{ _key }} = "{{ _val }}"
+{%     endfor %}
+{%   endif %}
 {% endif %}
 {% for item in telegraf_basic_inputs %}
 [[inputs.{{ item }}]]

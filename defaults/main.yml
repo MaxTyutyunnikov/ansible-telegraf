@@ -56,6 +56,10 @@ telegraf_inputs:
     fielddrop: 'time_*'
     ## Whether to report per-cpu stats or not
     percpu: true
+    ## Define any specific tags you would like
+    # tags:
+    #   tag1: 'foo'
+    #   tag2: 'bar'
     ## Whether to report total system cpu stats or not
     totalcpu: true
   disk:
@@ -68,6 +72,10 @@ telegraf_inputs:
     mount_points:
       - '/'
       # - '/var'
+    ## Define any specific tags you would like
+    # tags:
+    #   tag1: 'foo'
+    #   tag2: 'bar'
   docker:
     ## Only collect metrics for these containers, collect all if empty
     container_names:

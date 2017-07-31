@@ -1,6 +1,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [ansible-telegraf](#ansible-telegraf)
   - [Requirements](#requirements)
@@ -25,8 +25,6 @@ None
 ```yaml
 ---
 # defaults file for ansible-telegraf
-telagraf_config: true
-
 enable_telegraf_global_tags: false
 
 telegraf_agent_info:
@@ -67,6 +65,8 @@ telegraf_basic_inputs:
   - 'swap'
   - 'system'
 
+telagraf_config: false
+
 telegraf_debian_file: 'telegraf_{{ telegraf_version }}-1_amd64.deb'
 
 telegraf_dl_uri: 'https://dl.influxdata.com/telegraf/releases'
@@ -81,6 +81,10 @@ telegraf_inputs:
     fielddrop: 'time_*'
     ## Whether to report per-cpu stats or not
     percpu: true
+    ## Define any specific tags you would like
+    # tags:
+    #   tag1: 'foo'
+    #   tag2: 'bar'
     ## Whether to report total system cpu stats or not
     totalcpu: true
   disk:
@@ -93,6 +97,10 @@ telegraf_inputs:
     mount_points:
       - '/'
       # - '/var'
+    ## Define any specific tags you would like
+    # tags:
+    #   tag1: 'foo'
+    #   tag2: 'bar'
   docker:
     ## Only collect metrics for these containers, collect all if empty
     container_names:
@@ -184,6 +192,43 @@ telegraf_inputs:
       # - 'localhost:2181'
 
 telegraf_outputs:
+  elasticsearch:
+    ## HTTP basic authentication details (eg. when using Shield)
+    auth:
+      enabled: false
+      password: 'mypassword'
+      username: 'telegraf'
+    enabled: false
+    ## Set to true to ask Elasticsearch a list of all cluster nodes,
+    ## thus it is not necessary to list all nodes in the urls config option.
+    enable_sniffer: false
+    ## Set the interval to check if the Elasticsearch nodes are available
+    ## Setting to "0s" will disable the health check
+    ## (not recommended in production)
+    health_check_interval: 10s
+    ## Index Config
+    ## The target index for metrics (Elasticsearch will create if it not exists).
+    ## You can use the date specifiers below to create indexes per time frame.
+    ## The metric timestamp will be used to decide the destination index name
+      # %Y - year (2016)
+      # %y - last two digits of year (00..99)
+      # %m - month (01..12)
+      # %d - day of month (e.g., 01)
+      # %H - hour (00..23)
+    index_name: 'telegraf-%Y.%m.%d'
+    ## Template Config
+    ## Set to true if you want telegraf to manage its index template.
+    ## If enabled it will create a recommended index template for telegraf indexes
+    manage_template: true
+    ## Set to true if you want telegraf to overwrite an existing template
+    overwrite_template: false
+    ## The template name used for telegraf indexes
+    template_name: 'telegraf'
+    ## The full HTTP endpoint URL for your Elasticsearch instance
+    urls:
+      - 'http://node1.es.example.com:9200'
+    ## Elasticsearch client timeout, defaults to "5s" if not set.
+    timeout: 5s
   graphite:
     enabled: false
     ## Prefix metrics name
