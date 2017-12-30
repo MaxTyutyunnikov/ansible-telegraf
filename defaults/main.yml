@@ -241,4 +241,4 @@ telegraf_outputs:
 
 telegraf_redhat_file: "telegraf-{{ telegraf_version }}.x86_64.rpm"
 
-telegraf_version: 1.3.4
+telegraf_version: 1.5.0
