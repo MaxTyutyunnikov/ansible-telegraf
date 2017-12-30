@@ -2,5 +2,5 @@
 - name: debian | Installing Telegraf
   apt:
     deb: "{{ telegraf_dl_uri }}/{{ telegraf_debian_file }}"
-    state: "present"
+    state: present
   become: true
