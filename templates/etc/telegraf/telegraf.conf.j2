@@ -116,6 +116,12 @@
   cluster_health = {{ telegraf_inputs.elasticsearch.cluster_health|lower }}
 {% endif %}
 {% if telegraf_inputs.haproxy.enabled %}
+{% if telegraf_inputs['exec']['enabled'] %}
+[[inputs.exec]]
+  commands = ['{{ telegraf_inputs['exec']['commands']|join(', ') }}']
+  data_format = "{{ telegraf_inputs['exec']['data_format'] }}"
+  timeout = "{{ telegraf_inputs['exec']['timeout'] }}"
+{% endif %}
 [[inputs.haproxy]]
   servers = ["{{ telegraf_inputs.haproxy.servers|join ('", "')}}"]
 {% endif %}

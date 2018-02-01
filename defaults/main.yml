@@ -98,6 +98,13 @@ telegraf_inputs:
     local: true
     servers:
       - localhost:9200
+  # Defines scripts to execute
+  exec:
+    commands:
+      - python /opt/frr/monitoring/bgp_neighbor_data.py
+    data_format: influx
+    enabled: false
+    timeout: 5s
   haproxy:
     enabled: false
     servers:
